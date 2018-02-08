@@ -9,6 +9,22 @@ const del = require('del');
 const htmlmin = require('gulp-htmlmin');
 const imagemin = require('gulp-imagemin');
 const rigger = require('gulp-rigger');
+const babel = require('gulp-babel');
+const concat = require('gulp-concat');
+const uglify = require('gulp-uglify');
+
+gulp.task('js', () => {
+  return gulp.src('./src/js/*.js')
+    .pipe(babel({
+            presets: ['env']
+        }))
+    .pipe(concat('all.js'))
+    .pipe(uglify())
+    .pipe(gulp.dest('./dist'))
+    .pipe(browserSync.reload({
+      stream: true
+    }));
+});
 
 // Создаем таск для сборки html файлов
 gulp.task('html', () => {
